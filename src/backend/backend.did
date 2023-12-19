@@ -1,0 +1,27 @@
+type Error = variant { NotFound : record { msg : text } };
+type GreenSpace = record {
+  id : nat64;
+  name : text;
+  description : text;
+  location : text;
+};
+type GreenSpaceUpdatePayload = record {
+  name : text;
+  description : text;
+  location : text;
+};
+type Result = variant { Ok : GreenSpace; Err : Error };
+type Result_1 = variant { Ok : vec GreenSpace; Err : Error };
+type Result_2 = variant { Ok : nat64; Err : Error };
+service : {
+  add_green_space : (GreenSpaceUpdatePayload) -> (opt GreenSpace);
+  delete_green_space : (nat64) -> (Result);
+  get_all_green_spaces : () -> (Result_1) query;
+  get_green_space : (nat64) -> (Result) query;
+  get_green_space_count : () -> (Result_2) query;
+  search_green_spaces_by_description : (text) -> (Result_1) query;
+  search_green_spaces_by_location : (text) -> (Result_1) query;
+  search_green_spaces_by_name : (text) -> (Result_1) query;
+  update_green_space : (nat64, GreenSpaceUpdatePayload) -> (Result);
+  update_green_space_location : (nat64, text) -> (Result);
+}
